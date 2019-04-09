@@ -1,0 +1,121 @@
+* {
+    padding:0px;
+    margin: 0px;
+}
+
+body {
+    background-color: lightyellow;
+    display:flex;
+    flex-direction:column;
+    overflow-x:hidden;
+}
+
+#main-div {
+    
+}
+
+div.row {
+    max-height: 90vh;
+    overflow:hidden;
+}
+
+.navigation {
+    background-color: lightblue;
+    max-height:inherit;
+}
+
+.navigation-manage, .inside-nav-manage {
+    display:flex;
+    flex-direction: column;
+    margin-left: 0;
+    /* padding: 0; */
+}
+
+.navigation-manage a {
+    padding: 8px 8px;
+    list-style:none;
+}
+
+
+.navigation-manage a:hover {
+    display:flex;
+    background-color: lightgreen;
+
+}
+.inside-nav-manage a {
+    padding: 8px 8px;
+}
+
+.inside-nav-manage a:hover {
+    background-color:lightgreen;
+}
+
+div.navigation.col-sm-2 {
+    /* padding:0; */
+    overflow:scroll;
+}
+
+.navbar {
+    display:flex;
+    justify-content: space-between;
+}
+
+.workspace {
+    max-height:inherit;
+    overflow:scroll;
+}
+
+.add-workspace {
+    margin: 40px auto;
+    width:750px;
+    height: 200px;
+    background-color:lightcyan;
+}
+
+.searchbar .workspace {
+    text-align:center;
+    width: 90%;
+    margin: 40px auto;
+}
+
+.feed-image-container {
+    background-color: magenta;
+    padding: 20px;
+    width: 200px;
+    height:200px;
+    overflow:hidden;
+}
+
+.feed-text-container {
+    width:550px;
+    background-color:green;
+}
+
+.add-workspace .row {
+    margin: 0;
+}
+
+
+/* second page */
+
+.main-div-workspace {
+    width: 70%;
+    height: 1000px;
+    background-color:green;
+    margin: 50px auto;
+}
+
+
+textarea#paper {
+    overflow: auto;
+    resize:none;
+    height: 100%;
+    width: 100%;
+    padding: 10% 13%;
+}
+
+
+#navbar-paper {
+    display:flex;
+    justify-content: space-between;
+}
