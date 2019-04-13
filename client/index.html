@@ -6,159 +6,216 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
 
-    <!-- bootstrap css -->
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
-        integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-    <link rel="stylesheet" href="./css/style.css">
+    <link type="text/css" rel="stylesheet" href="//unpkg.com/bootstrap/dist/css/bootstrap.min.css" />
+    <link type="text/css" rel="stylesheet" href="//unpkg.com/bootstrap-vue@latest/dist/bootstrap-vue.min.css" />
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css"
         integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
+    <link rel="stylesheet" href="./css/style.css">
+    <link rel="stylesheet" href="./css/vueWysiwyg.css">
 
 
-
-
-    <title>Mini Wordpress</title>
+    <title>Document</title>
 </head>
 
 <body>
+    <div id="app">
+        <div id="home-page" v-show="homeSeen">
+            <b-navbar toggleable="lg" type="dark" variant="info">
+                <b-navbar-brand href="#"><i class="fab fa-wordpress"></i> Mini Wordpress</a></b-navbar-brand>
 
-        <div id="editor">
-                <nav class="navbar navbar-expand-lg navbar-light bg-light" id="navbar-paper">
-                    <a class="navbar-brand" href="#"><i class="fab fa-wordpress"></i> Mini Wordpress</a>
-                    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
-                        aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-                        <span class="navbar-toggler-icon"></span>
-                    </button>
-                    <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                        <ul class="navbar-nav mr-auto" id="navbar-editor">
-                            <li class="nav-item">
-                                <button class="btn btn-secondary">Close Editor</button>
-                                <button class="btn btn-primary" type="submit"> Publish </button>
+
+                <b-navbar-toggle target="nav-collapse"></b-navbar-toggle>
+
+                <b-collapse id="nav-collapse" is-nav>
+                    <b-navbar-nav>
+                        <b-nav-item href="#">Link</b-nav-item>
+                        <b-nav-item href="#" disabled>Disabled</b-nav-item>
+                    </b-navbar-nav>
+
+                    <!-- Right aligned nav items -->
+                    <b-navbar-nav class="ml-auto">
+                        <b-nav-form>
+                            <b-form-input size="sm" class="mr-sm-2" placeholder="Search"></b-form-input>
+                            <b-button size="sm" class="my-2 my-sm-0" type="submit">Search</b-button>
+                        </b-nav-form>
+                    </b-navbar-nav>
+                </b-collapse>
+            </b-navbar>
+
+            <div class="main-div">
+                <div class="row">
+                    <div class="navigation col-sm-2" id="navigation">
+                        <!-- <h2> Navigation</h2> -->
+                        <ul class="list">
+                            <!-- <li class="navigation-manage"><a href=""><i class="fas fa-tv"></i> View Site</a></li>
+                                <li class="navigation-manage"><a href=""><i class="fas fa-chart-bar"></i> Stats</a></li>
+                                <li class="navigation-manage"><a href=""><i class="fas fa-redo"></i> Activity</a></li>
+                                <li class="navigation-manage"><a href=""><i class="fas fa-tags"></i> Plan</a></li> -->
+                            <li class="navigation-manage">
+                                <ul class="inside-list">
+                                    <h2>Manage</h2>
+                                    <li class="inside-nav-manage">
+                                        <a href="#"><i class="fas fa-file-word"></i> Site Pages</a>
+                                    </li>
+                                    <li class="inside-nav-manage"><a href="#"><i class="far fa-newspaper"></i> Blog
+                                            Posts</a>
+                                    </li>
+                                    <li class="inside-nav-manage"><a href="#"><i class="far fa-image"></i> Media</a>
+                                    </li>
+                                    <li class="inside-nav-manage"><a href="#"><i class="far fa-comments"></i>
+                                            Comments</a>
+                                    </li>
+                                    <li class="inside-nav-manage"><a href="#"><i class="far fa-comment-dots"></i>
+                                            Feedback</a>
+                                    </li>
+                                    <li class="inside-nav-manage"><a href="#"><i class="fas fa-plug"></i> Plugins</a>
+                                    </li>
+                                    <li class="inside-nav-manage"><a href="#"><i class="fas fa-cloud-upload-alt"></i>
+                                            Import</a>
+                                    </li>
+                                </ul>
+                            </li>
+                            <li class="navigation-manage">
+                                <ul class="inside-list">
+                                    <h2>Personalize</h2>
+                                    <li class="inside-nav-manage"><a href="#"><i class="fas fa-tools"></i> Customize</a>
+                                    </li>
+                                </ul>
+                            </li>
+
+                            <li class="navigation-manage">
+                                <ul class="inside-list">
+                                    <h2>Configure</h2>
+                                    <li class="inside-nav-manage"><a href="#"><i class="fas fa-money-bill-wave"></i>
+                                            Earn</a>
+                                    </li>
+                                    <li class="inside-nav-manage"><a href="#"><i class="fas fa-share-alt"></i>
+                                            Sharing</a>
+                                    </li>
+                                    <li class="inside-nav-manage"><a href="#"><i class="fas fa-user-edit"></i>
+                                            People</a>
+                                    </li>
+                                    <li class="inside-nav-manage"><a href="#"><i class="fas fa-globe"></i> Domain</a>
+                                    </li>
+                                    <li class="inside-nav-manage"><a href="#"><i class="fas fa-cogs"></i> Settings</a>
+                                    </li>
+                                </ul>
                             </li>
                         </ul>
                     </div>
-                </nav>
-                <div class="main-div-workspace">
-                    <textarea name="paper" id="paper"></textarea>
+                    <div class="workspace col-sm-10">
+
+                        <div class="row" id="search-input-workspace">
+                                Search title here... [tap enter to search]
+                            <b-form-input placeholder="Enter title, case-insensitive" v-model="searchbar"
+                                v-on:keyup.enter="searchContent"></b-form-input>
+                                
+                            <button type="submit" v-on:click="searchContent" hidden>Search</button>
+                            <div class="row">
+                                <button type="submit" v-on:click="searchContent" hidden>Search</button>
+                            </div>
+                        </div>
+
+
+
+                        <div class="add-workspace">
+
+                            <!-- <ol id="articles-list">
+                                <li v-for="article in articlesData"><a href="#"
+                                        v-on:click="getArticleById(article._id)">{{ article.title }}</a> </li>
+                            </ol> -->
+
+
+                            <div class="cardview" v-for="article in articlesData">
+                                <div class="row feed-container" >
+                                    <div class="feed-image-container">
+                                        <img src="https://cmkt-image-prd.global.ssl.fastly.net/0.1.0/ps/3259504/580/386/m1/fpnw/wm0/letter-l-logo-template-160917-03-.png?1505553325&s=17641931d6253bcc16241190cb0e90c2" alt="book-press">
+                                    </div>
+                                    <div class="feed-text-container">
+                                        <div class="row title">{{ article.title }}</div>
+                                        <div class="row edit-cardview">
+                                            <b-button size="sm" class="my-2 my-sm-0" variant="primary" v-on:click="getArticleById(article._id)">Edit</b-button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- cards -->
+                        <!-- <div class="add-workspace">asdfasdf</div>
+                        <div class="add-workspace">asdfasdf</div>
+                        <div class="add-workspace">asdfasdf</div>
+                        <div class="add-workspace">asdfasdf</div> -->
+                    </div>
                 </div>
+                <a href="#" id="new-work" v-on:click="newArticle"><i class="fas fa-plus-circle fa-2x" ></i></a>
             </div>
-
-    <div id="home">
-        <nav class="navbar navbar-expand-lg navbar-light bg-light">
-            <a class="navbar-brand" href="#"><i class="fab fa-wordpress"></i> Mini Wordpress</a>
-            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
-                aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-
-            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        </div>
 
 
-                <ul class="navbar-nav mr-auto">
-                    <li class="nav-item">
-                        <a class="nav-link" href="#">Link</a>
-                    </li>
-                    </li>
-                </ul>
 
-
-                <form class="form-inline my-2 my-lg-0">
-                    <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
-                    <button class="btn btn-outline-success my-2 my-sm-0">Write</button>
-                </form>
-            </div>
-        </nav>
-
-        <div class="main-div">
-            <div class="row">
-                <div class="navigation col-sm-2" id="navigation">
-                    <h2> <a href="">Nothing yet</a></h2>
-                    <ul class="list">
-                        <li class="navigation-manage"><a href=""><i class="fas fa-tv"></i> View Site</a></li>
-                        <li class="navigation-manage"><a href=""><i class="fas fa-chart-bar"></i> Stats</a></li>
-                        <li class="navigation-manage"><a href=""><i class="fas fa-redo"></i> Activity</a></li>
-                        <li class="navigation-manage"><a href=""><i class="fas fa-tags"></i> Plan</a></li>
-                        <li class="navigation-manage">
-                            <ul class="inside-list">
-                                <h2>Manage</h2>
-                                <li class="inside-nav-manage"><a href="#"><i class="fas fa-file-word"></i> Site
-                                        Pages</a>
-                                </li>
-                                <li class="inside-nav-manage"><a href="#"><i class="far fa-newspaper"></i> Blog
-                                        Posts</a>
-                                </li>
-                                <li class="inside-nav-manage"><a href="#"><i class="far fa-image"></i> Media</a></li>
-                                <li class="inside-nav-manage"><a href="#"><i class="far fa-comments"></i> Comments</a>
-                                </li>
-                                <li class="inside-nav-manage"><a href="#"><i class="far fa-comment-dots"></i>
-                                        Feedback</a>
-                                </li>
-                                <li class="inside-nav-manage"><a href="#"><i class="fas fa-plug"></i> Plugins</a></li>
-                                <li class="inside-nav-manage"><a href="#"><i class="fas fa-cloud-upload-alt"></i>
-                                        Import</a>
-                                </li>
-                            </ul>
-                        </li>
-                        <li class="navigation-manage">
-                            <ul class="inside-list">
-                                <h2>Personalize</h2>
-                                <li class="inside-nav-manage"><a href="#"><i class="fas fa-tools"></i> Customize</a>
-                                </li>
-                            </ul>
-                        </li>
-
-                        <li class="navigation-manage">
-                            <ul class="inside-list">
-                                <h2>Configure</h2>
-                                <li class="inside-nav-manage"><a href="#"><i class="fas fa-money-bill-wave"></i>
-                                        Earn</a>
-                                </li>
-                                <li class="inside-nav-manage"><a href="#"><i class="fas fa-share-alt"></i> Sharing</a>
-                                </li>
-                                <li class="inside-nav-manage"><a href="#"><i class="fas fa-user-edit"></i> People</a>
-                                </li>
-                                <li class="inside-nav-manage"><a href="#"><i class="fas fa-globe"></i> Domain</a></li>
-                                <li class="inside-nav-manage"><a href="#"><i class="fas fa-cogs"></i> Settings</a></li>
-                            </ul>
+        <div v-show="editorSeen">
+            <!-- <nav class="navbar navbar-expand-lg navbar-light bg-light" id="navbar-paper">
+                <a class="navbar-brand" href="#"><i class="fab fa-wordpress"></i> Mini Wordpress</a>
+                <button class="navbar-toggler" type="button" data-toggle="collapse"
+                    data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
+                    aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                    <ul class="navbar-nav mr-auto" id="navbar-editor">
+                        <li class="nav-item">
+                            <button class="btn btn-secondary">Close Editor</button>
+                            <button class="btn btn-primary" type="submit"> Publish </button>
                         </li>
                     </ul>
                 </div>
-                <div class="workspace col-sm-10">
+            </nav> -->
+            <b-navbar toggleable="lg" type="dark" variant="info">
+                <div>
+                    <b-navbar-brand href="#"><i class="fab fa-wordpress"></i> Mini Wordpress</b-navbar-brand>
+                    <b-button size="sm" class="my-2 my-sm-0" variant="success" v-if="onEdit" v-on:click="updateArticle(id_onEdit)">Edit Draft</b-button>
+                    <b-button size="sm" class="my-2 my-sm-0" variant="success" v-else v-on:click="saveNewArticle">Save New Document</b-button>
+                    <b-button size="sm" class="my-2 my-sm-0" v-on:click="closeEditor">Close</b-button>
+                </div>
 
-                    <div class="add-workspace">
-                        <div class="row">
-                            <div class="feed-image-container">
-                            </div>
-                            <div class="feed-text-container">
-                                asfasd
-                            </div>
-                        </div>
+                <b-navbar-toggle target="nav-collapse"></b-navbar-toggle>
+
+            </b-navbar>
+
+            <div class="main-div-workspace">
+                <div style="margin-bottom:40px;">
+                    Title:
+                    <input type="text" id="title" v-model="title">
+
+                </div>
+                <div id="editor">
+                    Article Content:
+                    <div id="wysiwyg">
+                        <wysiwyg v-model="text" />
                     </div>
-                    <div class="add-workspace">asdfasdf</div>
-                    <div class="add-workspace">asdfasdf</div>
-                    <div class="add-workspace">asdfasdf</div>
-                    <div class="add-workspace">asdfasdf</div>
+
                 </div>
             </div>
-            <div><a href="#"><i class="fas fa-plus-circle"></i>Add Workspace</a></div>
+
         </div>
+
     </div>
 
-   
+    <!-- vueWysiwyg.js -->
 
+    <script src="./script/vueWysiwyg.js"></script>
+    <!-- axios -->
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <!-- bootstrap - vue -->
+    <script src="//unpkg.com/@babel/polyfill@latest/dist/polyfill.min.js"></script>
+    <!-- vue -->
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <script src="//unpkg.com/bootstrap-vue@latest/dist/bootstrap-vue.min.js"></script>
+    <script src="./script/main-vue.js"></script>
 
-
-    <!-- bootstrap jquery popper bootstrap js -->
-    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
-        integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
-        crossorigin="anonymous"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
-        integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
-        crossorigin="anonymous"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
-        integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
-        crossorigin="anonymous"></script>
-
-    <script src="./script/main.js"></script>
+    <!-- component -->
+    <script src="./script/components/login-modal.js"></script>
 </body>
 
 </html>

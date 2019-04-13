@@ -4,7 +4,7 @@
 }
 
 body {
-    background-color: lightyellow;
+    background-color:#fdfff9;
     display:flex;
     flex-direction:column;
     overflow-x:hidden;
@@ -20,8 +20,14 @@ div.row {
 }
 
 .navigation {
-    background-color: lightblue;
+    background-color: lightcyan;
     max-height:inherit;
+    padding-left:25px;
+}
+
+.navigation h2 {
+    padding-top :10px;
+    padding-bottom: 10px;
 }
 
 .navigation-manage, .inside-nav-manage {
@@ -40,7 +46,7 @@ div.row {
 .navigation-manage a:hover {
     display:flex;
     background-color: lightgreen;
-
+    text-decoration:none;
 }
 .inside-nav-manage a {
     padding: 8px 8px;
@@ -50,9 +56,14 @@ div.row {
     background-color:lightgreen;
 }
 
+.inside-nav-manage {
+}
+
 div.navigation.col-sm-2 {
     /* padding:0; */
+    padding-bottom:0;
     overflow:scroll;
+    padding-left:30px;
 }
 
 .navbar {
@@ -66,30 +77,17 @@ div.navigation.col-sm-2 {
 }
 
 .add-workspace {
-    margin: 40px auto;
-    width:750px;
-    height: 200px;
+    margin: auto;
+    width:60%;
     background-color:lightcyan;
 }
 
-.searchbar .workspace {
-    text-align:center;
-    width: 90%;
+#search-input-workspace{
     margin: 40px auto;
+    width:750px;
 }
 
-.feed-image-container {
-    background-color: magenta;
-    padding: 20px;
-    width: 200px;
-    height:200px;
-    overflow:hidden;
-}
 
-.feed-text-container {
-    width:550px;
-    background-color:green;
-}
 
 .add-workspace .row {
     margin: 0;
@@ -100,9 +98,15 @@ div.navigation.col-sm-2 {
 
 .main-div-workspace {
     width: 70%;
-    height: 1000px;
-    background-color:green;
+    /* background-color:white; */
     margin: 50px auto;
+}
+#title {
+    width:100%;
+}
+
+#wysiwyg {
+    background-color:white;
 }
 
 
@@ -118,4 +122,71 @@ textarea#paper {
 #navbar-paper {
     display:flex;
     justify-content: space-between;
+}
+
+
+button {
+    margin: 5px;
+}
+
+
+.cardview {
+    height: 80px;
+    width: 100%;
+    display:flex;
+    margin-bottom: 20px;
+    transition: 0.5s;
+}
+
+.cardview:hover {
+    box-shadow: 5px 5px 3px grey;
+}
+
+.feed-image-container {
+    background-color: magenta;
+    width: 125px;
+    height:100%;
+    overflow:hidden;
+    display:flex;
+}
+
+.feed-image-container img {
+    width:inherit;
+    text-align:center;
+}
+
+.feed-container {
+    width:inherit;
+}
+
+.feed-text-container {
+    background-color:green;
+    flex-grow:1;
+    padding:10px;
+}
+
+
+.edit-cardview {
+    display:flex;
+    justify-content:flex-end;
+    width:100%;
+}
+
+.row.title {
+    text-align:center;
+}
+
+#new-work {
+    position:fixed;
+	width:60px;
+	height:60px;
+	bottom:40px;
+	right:40px;
+	background-color:#0C9;
+	color:#FFF;
+	border-radius:50px;
+    display:flex;
+    justify-content: center;
+    align-items:center;
+	box-shadow: 2px 2px 3px #999;
 }
