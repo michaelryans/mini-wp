@@ -4,9 +4,14 @@ const Article = require('../models/article')
 class ArticleController {
     static create(req,res) {
         Article.create({
+            user:req.decoded._id,
             title:req.body.title,
             content:req.body.content,
             createdAt: new Date()
+            // user:req.decoded._id,
+            //title:req.file.cloudStoragePublicUrl,
+            // content:req.body.content,
+            // createdAt: new Date()
         })
         .then(created => {
             res.status(201).json(created)
@@ -24,6 +29,7 @@ class ArticleController {
         //first param is the filter
         //second param is the value to be updated
         //3rd param {new:true} -> will return the newly updated data
+        console.log('masuk sini')
         Article.findOneAndUpdate({
             _id:req.params.id
         }, req.body, {new:true})
@@ -34,6 +40,23 @@ class ArticleController {
             res.status(500).json({
                 error:err,
                 message: "error di find one and update"
+            })
+        })
+    }
+
+    static findAllUserArticle(req,res) {
+        console.log('masuk fungsiii')
+        console.log(req.decoded)
+        Article.find({
+            user:req.decoded._id
+        })
+        .then(found => {
+            res.status(200).json(found)
+        })
+        .catch(err => {
+            res.status(500).json({
+                message:"error get user specific article - server",
+                error:err
             })
         })
     }
@@ -67,7 +90,7 @@ class ArticleController {
     }
 
     static delete(req,res) {
-        Article.findOne({
+        Article.findOneAndDelete({
             _id:req.params.id
         })
         .then(found => {

@@ -5,7 +5,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-
     <link type="text/css" rel="stylesheet" href="//unpkg.com/bootstrap/dist/css/bootstrap.min.css" />
     <link type="text/css" rel="stylesheet" href="//unpkg.com/bootstrap-vue@latest/dist/bootstrap-vue.min.css" />
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css"
@@ -13,56 +12,95 @@
     <link rel="stylesheet" href="./css/style.css">
     <link rel="stylesheet" href="./css/vueWysiwyg.css">
 
+    <!-- google sign meta -->
+    <meta name="google-signin-client_id"
+        content="931520479732-ln3tmmmvvmcdagsh93cqjhr4nphta45o.apps.googleusercontent.com">
 
-    <title>Document</title>
+
+    <title>Mini Wordpress</title>
 </head>
 
 <body>
     <div id="app">
+
         <div id="home-page" v-show="homeSeen">
             <b-navbar toggleable="lg" type="dark" variant="info">
                 <b-navbar-brand href="#"><i class="fab fa-wordpress"></i> Mini Wordpress</a></b-navbar-brand>
-
-
                 <b-navbar-toggle target="nav-collapse"></b-navbar-toggle>
 
                 <b-collapse id="nav-collapse" is-nav>
-                    <b-navbar-nav>
-                        <b-nav-item href="#">Link</b-nav-item>
-                        <b-nav-item href="#" disabled>Disabled</b-nav-item>
-                    </b-navbar-nav>
-
                     <!-- Right aligned nav items -->
                     <b-navbar-nav class="ml-auto">
-                        <b-nav-form>
-                            <b-form-input size="sm" class="mr-sm-2" placeholder="Search"></b-form-input>
-                            <b-button size="sm" class="my-2 my-sm-0" type="submit">Search</b-button>
+
+                        <div>
+                            <b-button v-b-modal.modal-1 @click="showLogin" v-show="!isLogin">Login Here</b-button>
+
+                            <!-- Modal Component -->
+                            <b-modal id="modal-1" title="Login" v-model="panel.onLogin">
+                                <b-form-group id="input-group-1" label="Email address:" label-for="input-1"
+                                    description="We'll never share your email with anyone else.">
+                                    <b-form-input id="input-1" type="email" required placeholder="Enter email"
+                                        v-model="login.email" @keyup.enter="submitLogin">
+                                    </b-form-input>
+                                </b-form-group>
+
+                                <b-form-group id="input-group-2" label="Password:" label-for="input-2">
+                                    <b-form-input type="password" id="input-2" required placeholder="Enter password"
+                                        v-model="login.password" @keyup.enter="submitLogin">
+                                    </b-form-input>
+                                </b-form-group>
+
+                                Or Login with Google:
+                                <div class="g-signin2" data-onsuccess="onSignIn"></div>
+
+                                <!-- <input size="sm" class="mr-sm-2" placeholder="Enter email" v-model="login.email"
+                                    @keyup.enter="submitLogin"></b-form-input>
+                                <input size="sm" class="mr-sm-2" placeholder="Enter password" type="password"
+                                    v-model="login.password" @keyup.enter="submitLogin"></b-form-input> -->
+                                <div slot="modal-footer">
+                                    <b-button class="my-2 my-sm-0" @click="showRegister">Register</b-button>
+                                    <b-button class="my-2 my-sm-0" @click="submitLogin">Login</b-button>
+                                </div>
+
+                            </b-modal>
+                        </div>
+
+                        <!-- google sign -->
+                        <!-- <div class="g-signin2" data-onsuccess="onSignIn"></div> -->
+
+
+                        <a href="#" onclick="signOut();" v-show="isLogin">Sign out</a>
+                        <!-- <b-button size="sm" class="my-2 my-sm-0" @click="logout">Logout</b-button> -->
+
+                        <!-- <input size="sm" class="mr-sm-2" placeholder="Search"></b-form-input> -->
                         </b-nav-form>
                     </b-navbar-nav>
                 </b-collapse>
             </b-navbar>
 
             <div class="main-div">
+
+
+
+
                 <div class="row">
                     <div class="navigation col-sm-2" id="navigation">
                         <!-- <h2> Navigation</h2> -->
                         <ul class="list">
-                            <!-- <li class="navigation-manage"><a href=""><i class="fas fa-tv"></i> View Site</a></li>
-                                <li class="navigation-manage"><a href=""><i class="fas fa-chart-bar"></i> Stats</a></li>
-                                <li class="navigation-manage"><a href=""><i class="fas fa-redo"></i> Activity</a></li>
-                                <li class="navigation-manage"><a href=""><i class="fas fa-tags"></i> Plan</a></li> -->
                             <li class="navigation-manage">
                                 <ul class="inside-list">
-                                    <h2>Manage</h2>
-                                    <li class="inside-nav-manage">
-                                        <a href="#"><i class="fas fa-file-word"></i> Site Pages</a>
+                                    
+                                    <li class="inside-nav-manage" style="margin-top:20px;"><h6><i>Navigation Bar</i></h6></li>
+                                    <li class="inside-nav-manage"><a href="#" v-on:click="viewList()">
+                                            <i class="far fa-newspaper"></i> Blog Posts</a>
                                     </li>
-                                    <li class="inside-nav-manage"><a href="#"><i class="far fa-newspaper"></i> Blog
-                                            Posts</a>
+                                    <li class="inside-nav-manage" v-on:click="editList()" v-show="isLogin">
+                                        <a href="#"><i class="fas fa-file-word"></i> Edit Your Post</a>
                                     </li>
-                                    <li class="inside-nav-manage"><a href="#"><i class="far fa-image"></i> Media</a>
+                                    <li class="inside-nav-manage" @click="showMedia" v-show="isLogin"><a href="#"><i
+                                                class="far fa-image"></i> Media</a>
                                     </li>
-                                    <li class="inside-nav-manage"><a href="#"><i class="far fa-comments"></i>
+                                    <!-- <li class="inside-nav-manage"><a href="#"><i class="far fa-comments"></i>
                                             Comments</a>
                                     </li>
                                     <li class="inside-nav-manage"><a href="#"><i class="far fa-comment-dots"></i>
@@ -70,51 +108,110 @@
                                     </li>
                                     <li class="inside-nav-manage"><a href="#"><i class="fas fa-plug"></i> Plugins</a>
                                     </li>
-                                    <li class="inside-nav-manage"><a href="#"><i class="fas fa-cloud-upload-alt"></i>
-                                            Import</a>
-                                    </li>
-                                </ul>
-                            </li>
-                            <li class="navigation-manage">
-                                <ul class="inside-list">
-                                    <h2>Personalize</h2>
-                                    <li class="inside-nav-manage"><a href="#"><i class="fas fa-tools"></i> Customize</a>
-                                    </li>
-                                </ul>
-                            </li>
-
-                            <li class="navigation-manage">
-                                <ul class="inside-list">
-                                    <h2>Configure</h2>
-                                    <li class="inside-nav-manage"><a href="#"><i class="fas fa-money-bill-wave"></i>
-                                            Earn</a>
-                                    </li>
-                                    <li class="inside-nav-manage"><a href="#"><i class="fas fa-share-alt"></i>
-                                            Sharing</a>
-                                    </li>
-                                    <li class="inside-nav-manage"><a href="#"><i class="fas fa-user-edit"></i>
-                                            People</a>
-                                    </li>
-                                    <li class="inside-nav-manage"><a href="#"><i class="fas fa-globe"></i> Domain</a>
-                                    </li>
-                                    <li class="inside-nav-manage"><a href="#"><i class="fas fa-cogs"></i> Settings</a>
-                                    </li>
+                                    <li class="inside-nav-manage"><a href="#"><i class="fas fa-cloud-upload-alt"></i> -->
+                                            <!-- Import</a>
+                                    </li> -->
                                 </ul>
                             </li>
                         </ul>
                     </div>
                     <div class="workspace col-sm-10">
 
-                        <div class="row" id="search-input-workspace">
-                                Search title here... [tap enter to search]
+
+
+
+                        <!-- <div class="container upload-picture">
+                                <div class="input-group">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text" id="inputGroupFileAddon01" v-on:click="uploadFile">Upload</span>
+                                    </div>
+                                    <div class="custom-file">
+                                            <input type="file"
+                                            id="avatar" name="avatar"
+                                            accept="image/png, image/jpeg"> -->
+
+                        <!-- <input type="file" class="custom-file-input" id="inputGroupFile01"
+                                            aria-describedby="inputGroupFileAddon01" v-model="images.file" name="pic"> -->
+                        <!-- <label class="custom-file-label" for="avatar">Choose file</label>
+                                    </div>
+                                </div> -->
+
+                        <registration-component @submit-registration="registerUser" v-show="panel.onRegister">
+                        </registration-component>
+
+
+                        <div class="row" id="search-input-workspace" v-show="panel.onViewList">
+                            Search title here... [tap enter to search]
                             <b-form-input placeholder="Enter title, case-insensitive" v-model="searchbar"
                                 v-on:keyup.enter="searchContent"></b-form-input>
-                                
+
                             <button type="submit" v-on:click="searchContent" hidden>Search</button>
                             <div class="row">
                                 <button type="submit" v-on:click="searchContent" hidden>Search</button>
                             </div>
                         </div>
+
+                        <article-view v-bind:viewer="viewer" v-show="panel.onViewArticle"></article-view>
+
+
+                        <div v-show="panel.onMedia">
+                            <div class="container upload-picture">
+                                <div class="row">
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="name">Image Name:</label>
+                                    <input type="name" class="form-control" id="name" v-model="images.name">
+                                </div>
+                                <label for="avatar">Choose a picture:</label>
+                                <input type="file" id="avatar" name="images" ref="file" accept="image/png, image/jpeg"
+                                    v-on:change="uploadImage">
+                                <div class="row">
+                                    <button v-on:click="submitImage" class="btn btn-info">Upload</button>
+                                </div>
+                            </div>
+
+                            <div class="row" style="display:flex;" id="media-card">
+                                <div class="card" style="width: 18rem; margin: 20px;"><img
+                                        src="https://storage.googleapis.com/mini-wp12jx2374j3l2i/1555267441886corgi.jpeg"
+                                        alt="Card image cap" class="card-img-top">
+                                    <div class="card-body">
+                                        <h5 class="card-title">Add this code to your press to add this pic:(not yet working)</h5>
+                                        <p class="card-text">
+                                            &lt;img
+                                            src="https://storage.googleapis.com/mini-wp12jx2374j3l2i/1555267441886corgi.jpeg"&gt;
+                                        </p>
+                                    </div>
+                                </div>
+
+                                <div class="card" style="width: 18rem; margin:20px;" v-for="image in images.data">
+                                    <img class="card-img-top" v-bind:src="image.imageUrl" alt="Card image cap">
+                                    <div class="card-body">
+                                        <h5 class="card-title">Add this code to your press to add this pic: (not yet working)</h5>
+                                        <p class="card-text">
+                                            &lt;img src="{{image.imageUrl}}"&gt;
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- <div class="row">
+                                <div class="article-viewer" id="viewer">
+                                    In non viverra<b> arcu. <u>Etiam quis lacinia justo,
+                                            nsed maximus tellus. Nam blandit dui id felis euismod pellentesque.
+                                            \nAliquam interdum nisl libero, et placerat justo porttitor ac.
+                                            Nunc rutru</u></b><u>m iaculis elit, u<b>t faucibus nibh tempus ac<i>.
+                                                Aliquam a egestas sapien, nec feugiat massa. Suspendisse in augue et quam frin
+                                            </i></b></u><i><b>gilla\n dictum. Duis in neque feugiat erat pharetra blandit et ut
+                                            nunc.
+                                            Integer\n ut nisi vehicula, dictum quam nec, tempus ante. Maecenas at magna
+                                            \negestas, tincidunt ligula vel, fringilla justo.</b> Phase</i>llus nec
+                                    sagittis nulla. E<b>tiam lobortis feugiat molestie. Mauris tincidunt egestas ven</b>enatis.
+                                    Sed eu felis diam.11
+                                </div>
+                            </div> -->
+
 
 
 
@@ -126,18 +223,45 @@
                             </ol> -->
 
 
-                            <div class="cardview" v-for="article in articlesData">
-                                <div class="row feed-container" >
-                                    <div class="feed-image-container">
-                                        <img src="https://cmkt-image-prd.global.ssl.fastly.net/0.1.0/ps/3259504/580/386/m1/fpnw/wm0/letter-l-logo-template-160917-03-.png?1505553325&s=17641931d6253bcc16241190cb0e90c2" alt="book-press">
-                                    </div>
-                                    <div class="feed-text-container">
-                                        <div class="row title">{{ article.title }}</div>
-                                        <div class="row edit-cardview">
-                                            <b-button size="sm" class="my-2 my-sm-0" variant="primary" v-on:click="getArticleById(article._id)">Edit</b-button>
+                            <div v-show="panel.onViewList">
+                                <h3>Press Feed</h3>
+                                <div class="cardview-no-edit" v-for="article in articlesData" >
+                                    <div class="row feed-container">
+                                        <div class="feed-image-container">
+                                            <img src="https://cmkt-image-prd.global.ssl.fastly.net/0.1.0/ps/3259504/580/386/m1/fpnw/wm0/letter-l-logo-template-160917-03-.png?1505553325&s=17641931d6253bcc16241190cb0e90c2"
+                                                alt="book-press">
+                                        </div>
+                                        <div class="feed-text-container">
+                                            <div class="row title">{{ article.title }}</div>
+                                            <div class="row edit-cardview">
+                                                <b-button size="sm" class="my-2 my-sm-0" variant="success"
+                                                    v-on:click="viewArticleById(article._id)">View</b-button>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
+                            </div>
+
+
+                            <div v-show="panel.onEditList">
+                                    <h3>Your Posts</h3>
+                                    <div class="cardview" v-for="article in userArticleData" >
+                                        <div class="row feed-container">
+                                            <div class="feed-image-container">
+                                                <img src="https://cmkt-image-prd.global.ssl.fastly.net/0.1.0/ps/3259504/580/386/m1/fpnw/wm0/letter-l-logo-template-160917-03-.png?1505553325&s=17641931d6253bcc16241190cb0e90c2"
+                                                    alt="book-press">
+                                            </div>
+                                            <div class="feed-text-container">
+                                                <div class="row title">{{ article.title }}</div>
+                                                <div class="row edit-cardview">
+                                                    <b-button size="sm" class="my-2 my-sm-0" variant="primary"
+                                                        v-on:click="editArticleById(article._id)">Edit</b-button>
+                                                    <b-button size="sm" class="my-2 my-sm-0" variant="danger"
+                                                        v-on:click="deleteArticle(article._id)">Delete</b-button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
                             </div>
                         </div>
 
@@ -148,7 +272,7 @@
                         <div class="add-workspace">asdfasdf</div> -->
                     </div>
                 </div>
-                <a href="#" id="new-work" v-on:click="newArticle"><i class="fas fa-plus-circle fa-2x" ></i></a>
+                <a href="#" id="new-work" v-on:click="newArticle" v-show="isLogin"><i class="fas fa-plus-circle fa-2x"></i></a>
             </div>
         </div>
 
@@ -174,8 +298,10 @@
             <b-navbar toggleable="lg" type="dark" variant="info">
                 <div>
                     <b-navbar-brand href="#"><i class="fab fa-wordpress"></i> Mini Wordpress</b-navbar-brand>
-                    <b-button size="sm" class="my-2 my-sm-0" variant="success" v-if="onEdit" v-on:click="updateArticle(id_onEdit)">Edit Draft</b-button>
-                    <b-button size="sm" class="my-2 my-sm-0" variant="success" v-else v-on:click="saveNewArticle">Save New Document</b-button>
+                    <b-button size="sm" class="my-2 my-sm-0" variant="success" v-if="onEdit"
+                        v-on:click="updateArticle(id_onEdit)">Edit Draft</b-button>
+                    <b-button size="sm" class="my-2 my-sm-0" variant="success" v-else v-on:click="saveNewArticle">Save
+                        New Document</b-button>
                     <b-button size="sm" class="my-2 my-sm-0" v-on:click="closeEditor">Close</b-button>
                 </div>
 
@@ -202,11 +328,22 @@
 
     </div>
 
-    <!-- vueWysiwyg.js -->
 
-    <script src="./script/vueWysiwyg.js"></script>
+    <!-- swal -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@8"></script>
     <!-- axios -->
     <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+
+    <!-- client id
+    655523201289-h2jd3t6hci3d16k04avqgs2nqd27cmpe.apps.googleusercontent.com  -->
+
+    <!-- google sign -->
+    <script src="https://apis.google.com/js/platform.js" async defer></script>
+    <script src="./script/google-sign.js"></script>
+
+    <!-- vueWysiwyg.js -->
+    <script src="./script/vueWysiwyg.js"></script>
+
     <!-- bootstrap - vue -->
     <script src="//unpkg.com/@babel/polyfill@latest/dist/polyfill.min.js"></script>
     <!-- vue -->
@@ -214,8 +351,12 @@
     <script src="//unpkg.com/bootstrap-vue@latest/dist/bootstrap-vue.min.js"></script>
     <script src="./script/main-vue.js"></script>
 
+
+
     <!-- component -->
-    <script src="./script/components/login-modal.js"></script>
+    <script src="./script/components/login-component.js"></script>
+    <script src="./script/components/registration.js"></script>
+    <script src="./script/components/article-viewer.js"></script>
 </body>
 
 </html>
